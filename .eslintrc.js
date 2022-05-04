@@ -11,5 +11,8 @@ module.exports = {
     sourceType: 'module',
   },
   rules: {
+    'no-console': 'off',
+    'max-len': 'off',
+    'treatUndefinedAsUnspecified': true,
   },
 };
