@@ -1,0 +1,8 @@
+{
+  "name": "vull-solutions-api",
+  "version": "1.0.0",
+  "description": "api created for technical testing",
+  "main": "index.js",
+  "author": "Elias Forte",
+  "license": "MIT"
+}
