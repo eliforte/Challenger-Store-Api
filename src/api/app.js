@@ -8,7 +8,7 @@ const error = require('../middlewares/error');
 const app = express();
 
 const corsOptions = {
-  origins: [process.env.PORT],
+  origins: [`http://localhost:${process.env.PORT}/`],
 };
 
 app.use(cors(corsOptions));
