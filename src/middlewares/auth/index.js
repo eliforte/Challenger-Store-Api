@@ -8,7 +8,10 @@ const jwtConfig = {
   algorithm: 'HS256',
 };
 
-module.exports.CreateToken = (body) => jwt.sign({ data: body }, process.env.SECRET, jwtConfig);
+module.exports.CreateToken = (body) => {
+  const actionsUsers = body.role === 'admin' ? process.env.ADMIN_ACTIONS : process.env.CLIENT_ACTIONS;
+  return jwt.sign({ data: { ...body, actions: actionsUsers } }, process.env.SECRET, jwtConfig)
+};
 
 module.exports.VerifyToken = async (req, res, next) => {
   try {
@@ -17,19 +20,12 @@ module.exports.VerifyToken = async (req, res, next) => {
     if (!authorization) {
       return res.status(MISSING_TOKEN_401.status).json(MISSING_TOKEN_401);
     }
-
     const decode = jwt.verify(authorization, process.env.SECRET);
-    const { email, role } = decode.data;
+    const { email } = decode.data;
 
     const foundedEmail = await FindByEmail(email);
 
     if (!foundedEmail) return next(JWT_MALFORMED_401);
-
-    if(role === 'admin') {
-      decode.data.actions = process.env.ADMIN_ACTIONS;
-    }
-
-    req.user = decode.data.actions = process.env.CLIENT_ACTIONS;
 
     next();
   } catch (err) {
