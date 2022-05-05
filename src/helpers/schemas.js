@@ -12,3 +12,17 @@ module.exports.SCHEMARegister = Joi.object({
   role: Joi.string().required(),
   balance: Joi.number().strict().required(),
 });
+
+module.exports.SCHEMACreateProduct = Joi.object({
+  name: Joi.string().required(),
+  price: Joi.number().strict().required(),
+  quantity: Joi.number().strict().required(),
+  description: Joi.string().required(),
+});
+
+module.exports.SCHEMAEditProduct = Joi.object({
+  name: Joi.string(),
+  price: Joi.number().strict(),
+  quantity: Joi.number().strict(),
+  description: Joi.string(),
+});
