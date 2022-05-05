@@ -11,3 +11,13 @@ module.exports.Create = async ({ email, password, name, role, balance }) => awai
 module.exports.FindByEmail = async (email) => userCollection.findOne({ email });
 
 module.exports.FindById = async (id) => userCollection.findOne(ObjectId(id));
+
+module.exports.ChangeBalance = async (id, balance) => {
+  const { value } = await userCollection.findOneAndUpdate(
+    { _id: ObjectId(id) },
+    { $set: { balance } },
+    { returnOriginal: false , returnDocument: 'after'},
+  );
+
+  return value;
+};
