@@ -24,12 +24,12 @@ module.exports.CreateUser = async (email, password, name, role, balance) => {
   };
 };
 
-module.exports.LoginUser = async ({ email, password }) => {
+module.exports.LoginUser = async (email, password) => {
   const userExist = await FindByEmail(email);
   if (!userExist) return NewError(USER_NOT_EXIST_404);
 
   const cryptoPassword = await bcrypt.compare(password, userExist.password);
-  if (cryptoPassword) return NewError(INCORRECT_401);
+  if (!cryptoPassword) return NewError(INCORRECT_401);
   
   delete userExist.password;
   const token = CreateToken(userExist);
