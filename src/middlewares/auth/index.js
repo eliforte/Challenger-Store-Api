@@ -23,7 +23,7 @@ module.exports.VerifyToken = async (req, res, next) => {
     const foundedEmail = await FindByEmail(email);
 
     if (!foundedEmail) return next(JWT_MALFORMED_401);
-
+    req.user = decode.data;
     next();
   } catch (err) {
     next(JWT_MALFORMED_401);
@@ -45,6 +45,7 @@ module.exports.VerifyIsAdmin = async (req, res, next) => {
     const decode = jwt.verify(authorization, process.env.SECRET);
     const { role } = decode.data;
     if (role !== 'admin') return next(NOT_ADMIN_401);
+    req.user = decode.data;
     next();
   } catch (err) {
     next(NOT_ADMIN_401);
