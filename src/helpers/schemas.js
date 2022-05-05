@@ -10,14 +10,3 @@ module.exports.SCHEMARegister = Joi.object({
   name: Joi.string().required(),
   password: Joi.string().required(),
 });
-
-module.exports.SCHEMATask = Joi.object({
-  text: Joi.string().required(),
-  status: Joi.string().required(),
-  createAt: Joi.string().required(),
-});
-
-module.exports.SCHEMAUpdateTask = Joi.object({
-  text: Joi.string(),
-  status: Joi.string(),
-});
