@@ -1,7 +1,7 @@
 const express = require('express');
 const routerLogin = require('./users/login/route');
 const routerRegister = require('./users/register/route');
-const { Login, Register } = require('../global/middlewares/validation');
+const { Login, Register } = require('../middlewares/validation');
 
 const root = express.Router({ mergeParams: true });
 
