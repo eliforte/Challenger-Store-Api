@@ -9,4 +9,6 @@ module.exports.SCHEMARegister = Joi.object({
   email: Joi.string().email().required(),
   name: Joi.string().required(),
   password: Joi.string().required(),
+  role: Joi.string().required(),
+  balance: Joi.number().strict().required(),
 });
