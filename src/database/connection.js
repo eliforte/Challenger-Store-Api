@@ -1,13 +1,12 @@
 require('dotenv').config();
 const { MongoClient } = require('mongodb');
 
-const { MONGODB_URL } = process.env;
 const OPTIONS = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 };
 
-const client = new MongoClient(MONGODB_URL, OPTIONS);
+const client = new MongoClient(processo.env.MONGODB_URL, OPTIONS);
 
 const connection = async () => {
   try {
