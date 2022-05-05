@@ -6,5 +6,6 @@ const root = express.Router({ mergeParams: true });
 
 root.use('/user', routerUsers);
 root.use('/products', routerProducts);
+root.use('/purchase', routerPurchase);
 
 module.exports = root;
