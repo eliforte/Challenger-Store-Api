@@ -6,7 +6,7 @@ const OPTIONS = {
   useUnifiedTopology: true,
 };
 
-const client = new MongoClient(processo.env.MONGODB_URL, OPTIONS);
+const client = new MongoClient(process.env.MONGODB_URL, OPTIONS);
 
 const connection = async () => {
   try {
