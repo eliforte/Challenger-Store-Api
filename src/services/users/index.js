@@ -1,20 +1,19 @@
 require('dotenv').config();
 const bcrypt = require('bcrypt');
-const { FindByEmail, Create, FindById } = require('../../database/users');
+const Model = require('../../database/users');
 const { ApiError: { NewError } } = require('../../helpers/error');
 const { CreateToken } = require('../../middlewares/auth');
-const { EMAIL_EXIST_409, USER_NOT_EXIST_404, INCORRECT_401 } = require('../../helpers/messages');
+const Messages = require('../../helpers/messages');
 
 module.exports.Create = async (email, password, name, role, balance) => {
-  const userExist = await FindByEmail(email);
-  if (userExist) return NewError(EMAIL_EXIST_409);
+  const userExist = await Model.FindByEmail(email);
+  if (userExist) return NewError(Messages.EMAIL_EXIST_409);
 
   const cryptoPassword = await bcrypt.hash(password, 10);
 
-  const newUser = await Create({ email, password: cryptoPassword, name, role, balance });
-  const findNewUser = await  FindById(newUser.insertedId);
+  const newUser = await Model.Create({ email, password: cryptoPassword, name, role, balance });
+  const findNewUser = await Model.FindById(newUser.insertedId);
 
-  delete findNewUser._id;
   delete findNewUser.password;
   newUser.role = role
   const token = CreateToken(newUser);
@@ -26,13 +25,12 @@ module.exports.Create = async (email, password, name, role, balance) => {
 };
 
 module.exports.Login = async (email, password) => {
-  const userExist = await FindByEmail(email);
-  if (!userExist) return NewError(USER_NOT_EXIST_404);
+  const userExist = await Model.FindByEmail(email);
+  if (!userExist) return NewError(Messages.USER_NOT_EXIST_404);
 
   const cryptoPassword = await bcrypt.compare(password, userExist.password);
-  if (!cryptoPassword) return NewError(INCORRECT_401);
+  if (!cryptoPassword) return NewError(Messages.INCORRECT_401);
   
-  delete userExist._id;
   delete userExist.password;
   const token = CreateToken(userExist);
   
