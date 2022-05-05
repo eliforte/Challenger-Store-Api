@@ -4,13 +4,12 @@ const { UNAUTHORIZED } = require('http-status-codes').StatusCodes;
 const { JWT_MALFORMED_401, MISSING_TOKEN_401 } = require('../../helpers/messages');
 const { FindByEmail } = require('../../database/users');
 
-const { SECRET } = process.env;
 const jwtConfig = {
   expiresIn: '7d',
   algorithm: 'HS256',
 };
 
-module.exports.CreateToken = (body) => jwt.sign({ data: body }, SECRET, jwtConfig);
+module.exports.CreateToken = (body) => jwt.sign({ data: body }, process.env.SECRET, jwtConfig);
 
 module.exports.VerifyToken = async (req, res, next) => {
   try {
