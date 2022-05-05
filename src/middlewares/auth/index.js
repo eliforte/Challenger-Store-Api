@@ -1,7 +1,6 @@
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
-const { UNAUTHORIZED } = require('http-status-codes').StatusCodes;
-const { JWT_MALFORMED_401, MISSING_TOKEN_401 } = require('../../helpers/messages');
+const { JWT_MALFORMED_401, MISSING_TOKEN_401, NOT_ADMIN_401 } = require('../../helpers/messages');
 const { FindByEmail } = require('../../database/users');
 
 const jwtConfig = {
@@ -14,14 +13,24 @@ module.exports.CreateToken = (body) => jwt.sign({ data: body }, process.env.SECR
 module.exports.VerifyToken = async (req, res, next) => {
   try {
     const { authorization } = req.headers;
+
     if (!authorization) {
-      return res.status(UNAUTHORIZED).json(MISSING_TOKEN_401);
+      return res.status(MISSING_TOKEN_401.status).json(MISSING_TOKEN_401);
     }
-    const decoded = jwt.verify(authorization, process.env.SECRET);
-    const { email } = decoded.data;
+
+    const decode = jwt.verify(authorization, process.env.SECRET);
+    const { email, role } = decode.data;
+
     const foundedEmail = await FindByEmail(email);
+
     if (!foundedEmail) return next(JWT_MALFORMED_401);
-    req.user = decoded.data;
+
+    if(role === 'admin') {
+      decode.data.actions = process.env.ADMIN_ACTIONS;
+    }
+
+    req.user = decode.data.actions = process.env.CLIENT_ACTIONS;
+
     next();
   } catch (err) {
     next(JWT_MALFORMED_401);
