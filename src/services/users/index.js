@@ -5,7 +5,7 @@ const { ApiError: { NewError } } = require('../../helpers/error');
 const { CreateToken } = require('../../middlewares/auth');
 const { EMAIL_EXIST_409, USER_NOT_EXIST_404, INCORRECT_401 } = require('../../helpers/messages');
 
-module.exports.CreateUser = async (email, password, name, role, balance) => {
+module.exports.Create = async (email, password, name, role, balance) => {
   const userExist = await FindByEmail(email);
   if (userExist) return NewError(EMAIL_EXIST_409);
 
@@ -24,7 +24,7 @@ module.exports.CreateUser = async (email, password, name, role, balance) => {
   };
 };
 
-module.exports.LoginUser = async (email, password) => {
+module.exports.Login = async (email, password) => {
   const userExist = await FindByEmail(email);
   if (!userExist) return NewError(USER_NOT_EXIST_404);
 
