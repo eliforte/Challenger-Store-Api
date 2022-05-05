@@ -14,6 +14,7 @@ module.exports.Create = async (email, password, name, role, balance) => {
   const newUser = await Create({ email, password: cryptoPassword, name, role, balance });
   const findNewUser = await  FindById(newUser.insertedId);
 
+  delete findNewUser._id;
   delete findNewUser.password;
   newUser.role = role
   const token = CreateToken(newUser);
@@ -31,6 +32,7 @@ module.exports.Login = async (email, password) => {
   const cryptoPassword = await bcrypt.compare(password, userExist.password);
   if (!cryptoPassword) return NewError(INCORRECT_401);
   
+  delete userExist._id;
   delete userExist.password;
   const token = CreateToken(userExist);
   

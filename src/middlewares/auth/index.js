@@ -8,10 +8,7 @@ const jwtConfig = {
   algorithm: 'HS256',
 };
 
-module.exports.CreateToken = (body) => {
-  const actionsUsers = body.role === 'admin' ? process.env.ADMIN_ACTIONS : process.env.CLIENT_ACTIONS;
-  return jwt.sign({ data: { ...body, actions: actionsUsers } }, process.env.SECRET, jwtConfig)
-};
+module.exports.CreateToken = (body) => jwt.sign({ data: { ...body } }, process.env.SECRET, jwtConfig);
 
 module.exports.VerifyToken = async (req, res, next) => {
   try {
@@ -32,3 +29,24 @@ module.exports.VerifyToken = async (req, res, next) => {
     next(JWT_MALFORMED_401);
   }
 };
+
+module.exports.VerifyNewUser = async (req, res, next) => {
+  try {
+    req.body.role = 'customer';
+    next();
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports.VerifyIsAdmin = async (req, res, next) => {
+  try {
+    const { authorization } = req.headers;
+    const decode = jwt.verify(authorization, process.env.SECRET);
+    const { role } = decode.data;
+    if (role !== 'admin') return next(NOT_ADMIN_401);
+    next();
+  } catch (err) {
+    next(NOT_ADMIN_401);
+  }
+}
