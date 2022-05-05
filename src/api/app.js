@@ -1,9 +1,9 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-require('dotenv').config();
 const bodyParser = require('body-parser');
 const root = require('../controllers/root');
-const error = require('../global/middlewares/error');
+const error = require('../middlewares/error');
 
 const app = express();
 
