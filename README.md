@@ -10,17 +10,16 @@ API desenvolvida para simular o controle de uma Loja.
 - [Sobre](#sobre)
 - [Contatos](#contatos)
 - [Ferramentas utilizadas](#ferramentas-utilizadas)
-- [Testes](#testes)
 - [Requisições e End-Points](#requisições-e-end-points)
+- [Segurança](#segurança)
 - [Script](#script)
-- [Autenticação de usuário](#autentica-de-usuário)
-  - [Registro](#registro)
-  - [Login](#login)
+- [Rotas](#registro)
+  - [<code>/api/v1/user</code>](#login)
 - [Tarefas](#tarefas)
   - [Listagem de Tarefas](#listagem-de-tarefas)
-  - [Criando Tarefas](#criando-tarefas)
+  - [Criando Taefa)refas](#criando-tarefas)
   - [Atualizando dados de uma tarefa](#atualizando-dados-de-uma-tarefa)
-  - [Removendo Tarefa](#removendo-tarefa)
+  - [Removendo Tarefa](#removendo-tar)
 - [Contribuições](#contribuições)
 
 ***
@@ -44,17 +43,16 @@ API desenvolvida para simular o controle de uma Loja.
 
 Deploy da aplicação feita na plataforma gratuita de hospedagem [Heroku](https://id.heroku.com/).
 
-
 ## Requisições e End-Points
 
-Todas as requisições devem ser feitas para está [url](https://ebyrt-api.herokuapp.com/).
+Todas as requisições devem ser feitas para está [url](https://voll-solutions-challenger.herokuapp.com/).
 
 ## Script
 
-- <code>npm install</code> => instalará todas a dependências do projeto use o comando.
-- <code>npm start</code> => inicializará a aplicação para ambiente de produção.
-- <code>npm run dev</code> => inicializará a aplicação para ambiente de desenvolvimento.
-- <code>npm run test</code> => incializará os testes unitários da aplicação.
+- <code>yarn</code> => instalará todas a dependências do projeto use o comando.
+- <code>yarn start</code> => inicializará a aplicação para ambiente de produção.
+- <code>yarn dev</code> => inicializará a aplicação para ambiente de desenvolvimento.
+
 
 ***
 
@@ -62,8 +60,7 @@ Todas as requisições devem ser feitas para está [url](https://ebyrt-api.herok
 
 #### REGISTRO
 
-Para poder adicionar, editar ou remover, o usuário tera que ser cadastrado no site, caso contrário, não conseguirá
-realizar essas ações.
+Usuários comuns podem somente vizualizar seu saldo de moedas e realizar compras. Somente Admins podem ter editar, criar, remover, adicionar saldo, remover usuário
 
 O cadrastro deve ser feito por um requisição do tipo <strong>POST</strong> para o endpoint <code>/register</code>, contendo as seguites informações:
 
