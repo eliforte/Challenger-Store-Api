@@ -5,8 +5,8 @@ const routerPurchase = require('./purchase/route');
 
 const root = express.Router({ mergeParams: true });
 
-root.use('/user', routerUsers);
-root.use('/products', routerProducts);
-root.use('/purchase', routerPurchase);
+root.use('/api/v1/user', routerUsers);
+root.use('/api/v1/products', routerProducts);
+root.use('/api/v1/purchase', routerPurchase);
 
 module.exports = root;
