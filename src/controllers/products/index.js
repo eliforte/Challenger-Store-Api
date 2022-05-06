@@ -46,14 +46,3 @@ module.exports.Delete = async (req, res, next) => {
     next(err);
   }
 };
-
-module.exports.FindOne = async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const newId = id.trim();
-    const product = await ProductsService.FindOne(newId);
-    return res.status(OK).json(product);
-  } catch (err) {
-    next(err);
-  }
-};

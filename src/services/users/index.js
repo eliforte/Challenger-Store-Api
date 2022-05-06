@@ -40,11 +40,12 @@ module.exports.Login = async (email, password) => {
   };
 };
 
-module.exports.GetAll = async () => await Model.FindAll();
+module.exports.GetAll = async () => Model.FindAll();
 
 module.exports.AddBalance = async (id, newBalance) => {
   const userExist = await Model.FindById(id);
   if (!userExist) return NewError(Messages.USER_NOT_EXIST_404);
   const updatedBalance = await Model.ChangeBalance(id, newBalance);
+  delete updatedBalance.password;
   return updatedBalance;
 };
