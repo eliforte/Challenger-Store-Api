@@ -39,3 +39,5 @@ module.exports.Login = async (email, password) => {
     token,
   };
 };
+
+module.exports.GetAll = async () => await Model.FindAll();

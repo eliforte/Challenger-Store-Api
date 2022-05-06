@@ -20,3 +20,12 @@ module.exports.Register = async (req, res, next) => {
     next(err);
   }
 };
+
+module.exports.GetAll = async (_req, res, next) => {
+  try {
+    const users = await UsersService.GetAll();
+    return res.status(OK).json(users);
+  } catch (err) {
+    next(err);
+  }
+}
