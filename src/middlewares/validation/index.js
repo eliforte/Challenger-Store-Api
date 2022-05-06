@@ -18,6 +18,7 @@ module.exports.Login = async (req, _res, next) => {
 
 module.exports.Register = async (req, _res, next) => {
   try {
+    if(!req.body.balance) req.body.balance = 0;
     const { error } = SCHEMARegister.validate(req.body);
     if (error) return next({ message: error.message, status: BAD_REQUEST });
     next();
