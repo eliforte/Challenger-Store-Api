@@ -4,6 +4,6 @@ const Authorization = require('../../middlewares/auth');
 
 const router = express.Router({ mergeParams: true });
 
-router.post('/', Authorization.VerifyToken, Controllers.Create);
+router.post('/', Authorization.VerifyToken, Controllers.Buy);
 
 module.exports = router;

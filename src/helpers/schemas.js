@@ -21,8 +21,8 @@ module.exports.SCHEMACreateProduct = Joi.object({
 });
 
 module.exports.SCHEMAEditProduct = Joi.object({
-  name: Joi.string(),
-  price: Joi.number().strict(),
-  quantity: Joi.number().strict(),
-  description: Joi.string(),
+  name: Joi.string().required(),
+  price: Joi.number().strict().required(),
+  quantity: Joi.number().strict().required(),
+  description: Joi.string().required(),
 });
