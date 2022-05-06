@@ -3,9 +3,13 @@ const ProductsService = require('../../services/products');
 
 module.exports.Create = async (req, res, next) => {
   try {
+    const { _id: userId } = req.user;
     const { name, price, description, quantity } = req.body;
-    const createdProduct = await ProductsService.Create({ name, price, description, quantity });
-    return res.status(CREATED).json(createdProduct);
+    const createdProduct = await ProductsService.Create({ name, price, description, quantity, userId });
+    return res.status(CREATED).json({
+      message: 'Product created successfully',
+      productId: createdProduct.insertedId,
+    });
   } catch (err) {
     next(err);
   }
@@ -23,8 +27,9 @@ module.exports.GetAll = async (_req, res, next) => {
 module.exports.Edit = async (req, res, next) => {
   try {
     const { id } = req.params;
+    const newId = id.trim();
     const { name, price, description, quantity } = req.body;
-    const editedProduct = await ProductsService.Edit(id, { name, price, description, quantity });
+    const editedProduct = await ProductsService.Edit(newId, { name, price, description, quantity });
     return res.status(ACCEPTED).json(editedProduct);
   } catch (err) {
     next(err);
@@ -34,8 +39,20 @@ module.exports.Edit = async (req, res, next) => {
 module.exports.Delete = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const deletedProduct = await ProductsService.Delete(id);
+    const newId = id.trim();
+    const deletedProduct = await ProductsService.Delete(newId);
     return res.status(NO_CONTENT).json(deletedProduct);
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports.FindOne = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const newId = id.trim();
+    const product = await ProductsService.FindOne(newId);
+    return res.status(OK).json(product);
   } catch (err) {
     next(err);
   }

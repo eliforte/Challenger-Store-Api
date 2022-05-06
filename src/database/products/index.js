@@ -1,14 +1,14 @@
 const { ObjectId } = require('mongodb');
 const { client } = require('../connection');
+
 const DB_COLLECTION = 'products';
 
 const userCollection = client.db(process.env.DB_NAME).collection(DB_COLLECTION);
 
-module.exports.Create = async ({ name, price, quantity, description }) => (
-  await userCollection.insertOne({ name, price, quantity, description })
-);
 
-module.exports.FindByName = async (name) => userCollection.findOne({ name: { $regex: `/${name}/i` } });
+module.exports.Create = async (infoProducts) => await userCollection.insertOne({ ...infoProducts });
+
+module.exports.FindByName = async (name) => userCollection.findOne({ name });
 
 module.exports.FindById = async (id) => userCollection.findOne(ObjectId(id));
 
@@ -18,10 +18,10 @@ module.exports.Edit = async (id, infoGame) => {
   const { value } = await userCollection.findOneAndUpdate(
     { _id: ObjectId(id) },
     { $set: infoGame },
-    { returnOriginal: false , returnDocument: 'after'},
+    { returnDocument: 'after', returnOriginal: false },
   );
-
-  return value;;
+  
+  return value;
 };
 
 module.exports.Delete = async (id) => await userCollection.deleteOne({ _id: ObjectId(id) });
