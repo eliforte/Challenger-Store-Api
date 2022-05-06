@@ -14,6 +14,7 @@ module.exports.Create = async (email, password, name, role, balance) => {
   const newUser = await Model.Create({ email, password: cryptoPassword, name, role, balance });
   const findNewUser = await Model.FindById(newUser.insertedId);
 
+  delete userExist.balance;
   delete findNewUser.password;
   newUser.role = role
   const token = CreateToken(newUser);
@@ -31,6 +32,7 @@ module.exports.Login = async (email, password) => {
   const cryptoPassword = await bcrypt.compare(password, userExist.password);
   if (!cryptoPassword) return NewError(Messages.INCORRECT_401);
   
+  delete userExist.balance;
   delete userExist.password;
   const token = CreateToken(userExist);
   
@@ -41,3 +43,10 @@ module.exports.Login = async (email, password) => {
 };
 
 module.exports.GetAll = async () => await Model.FindAll();
+
+module.exports.AddBalance = async (id, newBalance) => {
+  const userExist = await Model.FindById(id);
+  if (!userExist) return NewError(Messages.USER_NOT_EXIST_404);
+  const updatedBalance = await Model.ChangeBalance(id, newBalance);
+  return updatedBalance;
+};

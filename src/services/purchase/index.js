@@ -7,23 +7,22 @@ const Messages = require('../../helpers/messages');
 module.exports.Buy = async (products, userId, totalPrice) => {
   const user = await ModelUsers.FindById(userId);
   if (user.balance < totalPrice) return NewError(Messages.BALANCE_NOT_ENOUGH_409);
-  const newBalance = user.balance - totalPrice;
-  const uptadeUserBalance = await ModelUsers.Edit(infoUser, { balance: newBalance });
 
+  const newBalance = Math.round(user.balance - totalPrice).toFixed(2);
+  const uptadeUserBalance = await ModelUsers.ChangeBalance(userId,newBalance);
+  
   products.map(async (product) => {
-    const productHas = await ModelProducts.FindById(product.id);
-
+    const productHas = await ModelProducts.FindById(product._id);
     if (productHas.quantity < product.quantity) return NewError(Messages.QUANTITY_NOT_ENOUGH_409);
   
     const newQuantity = productHas.quantity - product.quantity;
   
-    await ModelProducts.Edit(id, { quantity: newQuantity });
+    await ModelProducts.Edit(product._id, { quantity: newQuantity });
   })
 
   const createPurchase = await ModelPurchases.Create({ products, userId, totalPrice });
-
   return {
-    purchase: { ...createPurchase },
+    purchase: { id: createPurchase.insertedId },
     user: { ...uptadeUserBalance },
   };
 };
