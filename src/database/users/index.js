@@ -17,7 +17,7 @@ module.exports.GetAll = async () => await userCollection.find({}).toArray();
 module.exports.ChangeBalance = async (id, balance) => {
   const { value } = await userCollection.findOneAndUpdate(
     { _id: ObjectId(id) },
-    { $set: { balance } },
+    { balance },
     { returnOriginal: false , returnDocument: 'after'},
   );
 

@@ -4,7 +4,7 @@ const UsersService = require('../../services/users');
 module.exports.Login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
-    const loginAccepted = await UseUsersServicers.Login(email, password);
+    const loginAccepted = await UsersService.Login(email, password);
     return res.status(ACCEPTED).json(loginAccepted);
   } catch (err) {
     next(err)
@@ -28,4 +28,16 @@ module.exports.GetAll = async (_req, res, next) => {
   } catch (err) {
     next(err);
   }
-}
+};
+
+module.exports.AddBalance = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const newId = id.trim();
+    const { balance } = req.body;
+    const user = await UsersService.AddBalance(newId, balance);
+    return res.status(ACCEPTED).json(user);
+  } catch (err) {
+    next(err);
+  }
+};
