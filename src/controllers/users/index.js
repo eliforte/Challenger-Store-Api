@@ -1,4 +1,4 @@
-const { ACCEPTED, CREATED } = require('http-status-codes').StatusCodes;
+const { ACCEPTED, CREATED, OK } = require('http-status-codes').StatusCodes;
 const UsersService = require('../../services/users');
 
 module.exports.Login = async (req, res, next) => {
