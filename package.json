@@ -6,7 +6,7 @@
   "author": "Elias Forte",
   "license": "MIT",
   "scripts": {
-    "start": "node src/api/server.js",
+    "start": "cross-env NODE_ENV=production node src/api/server.js",
     "dev": "nodemon src/api/server.js"
   },
   "keywords": [
