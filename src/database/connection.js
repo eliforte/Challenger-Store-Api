@@ -6,9 +6,7 @@ const OPTIONS = {
   useUnifiedTopology: true,
 };
 
-const url = process.env.NODE_ENV === 'production' ? process.env.MONGODB_URL : 'mongodb://localhost:27017/voll-solutions-chanllenger';
-
-const client = new MongoClient(url, OPTIONS);
+const client = new MongoClient(process.env.MONGODB_URL, OPTIONS);
 
 const connection = async () => {
   try {
