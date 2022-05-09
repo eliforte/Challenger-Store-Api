@@ -35,7 +35,7 @@ API developed to simulate the control of a store.
 
 ***
 ## **About**
-  Application developed by [Elias Forte](https://github.com/eliforte) for the technical challenger of the company Voll Solutions. In this application, only administrators can add new currencies for common users and manipulate store products. Customers are only able to view products, purchases made and their balance.
+  Application developed by [Elias Forte](https://github.com/eliforte) for the technical challenger. In this application, only administrators can add new currencies for common users and manipulate store products. Customers are only able to view products, purchases made and their balance.
   
 ## **Contacts**
 <a targer="_blank" href="https://www.instagram.com/eliifort/"><img src="https://img.icons8.com/fluency/48/000000/instagram-new.png"/></a>
