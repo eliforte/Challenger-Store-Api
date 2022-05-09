@@ -1,4 +1,4 @@
-# Voll Solutions Challenge Api
+# Challenger Store Api
 
 API developed to simulate the control of a store.
 
